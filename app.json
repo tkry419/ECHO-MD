@@ -1,0 +1,18 @@
+{
+  "name": "♥️ECHO-MD PAIR♥️",
+  "description": "SESSION ID GENERATOR FOR WHATSAPP BOTS",
+  "logo": "https://files.catbox.moe/vln5sk.jpg",
+  "repository": "https://github.com/tkry419/ECHO-MD",
+  "keywords": ["@ECHO-MD"],
+  "success_url": "/", 
+  "buildpacks": [
+    { "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest" }
+  ],
+  "env": {      
+    "MESSAGE": {
+      "description": "Msg Attached With Session ID",
+      "value": "🔰 BY || ECHO-MD OFFICIAL 🔰",
+      "required": false 
+    }
+  }
+}
