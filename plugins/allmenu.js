@@ -28,8 +28,8 @@ cmd({
             menuText += grouped[cat].map(c => `💫 ${c}`).join("\n") + "\n";
         }
 
-        const time = moment().tz("Africa/Kampala").format("HH:mm:ss");
-        const date = moment().tz("Africa/Kampala").format("dddd, MMMM Do YYYY");
+        const time = moment().tz("Africa/Lagos").format("HH:mm:ss");
+        const date = moment().tz("Africa/Lagos").format("dddd, MMMM Do YYYY");
 
         const caption = `
 ╭━━━《 *𝙴𝙲𝙷𝙾-𝙼𝙳* 》━━━┈⊷
@@ -37,7 +37,7 @@ cmd({
 ┃ ✦│▸ Total Commands : *${totalCommands}*
 ┃ ✦│▸ Time           : ${time}
 ┃ ✦│▸ Date           : ${date}
-┃ ✦│▸ Platform       : arslanmd.xo.je
+┃ ✦│▸ Platform       : Render
 ┃ ✦╰─────────────┈⊷
 ╰━━━━━━━━━━━━┈⊷
 ${menuText}
