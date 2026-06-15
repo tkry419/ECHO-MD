@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { cmd } = require('../echo');
-const { fakevCard } = require('../lib/fakevcard');
+const { fakevCard } = require('../lib/fakevCard');
 
 cmd({
     pattern: "igdl",
