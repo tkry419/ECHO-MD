@@ -1,6 +1,6 @@
 const { cmd } = require('../echo');
 const axios = require('axios');
-const { fakevCard } = require('../lib/fakevcard');
+const { fakevCard } = require('../lib/fakevCard');
 
 const XV_API = "https://arslan-apis-v2.vercel.app";
 
