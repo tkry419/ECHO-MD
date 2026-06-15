@@ -249,7 +249,7 @@ async function echoPair(number, res = null) {
 
         socketCreationTime.set(sanitizedNumber, Date.now());
         activeSockets.set(sanitizedNumber, conn);
-        arslanStore.bind(conn.ev);
+        echoStore.bind(conn.ev);
 
         // Setup handlers
         setupCallHandlers(conn, number);
