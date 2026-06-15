@@ -1,6 +1,6 @@
 const { cmd } = require("../echo");
 const moment = require("moment");
-const { fakevCard } = require('../lib/fakevCard');
+const { fakevCard } = require('../lib/fakevcard');
 
 let botStartTime = Date.now(); // Recording the start time of the bot
 const ALIVE_IMG = "https://files.catbox.moe/vln5sk.jpg"; // Make sure this URL is valid
