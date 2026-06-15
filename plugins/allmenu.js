@@ -1,6 +1,6 @@
 const { cmd, commands } = require("../echo");
 const moment = require("moment-timezone");
-const { fakevCard } = require('../lib/fakevcard');
+const { fakevCard } = require('../lib/fakevCard');
 
 cmd({
     pattern: "menu",
