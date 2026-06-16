@@ -11,13 +11,13 @@ cmd({
   filename: __filename
 }, async (conn, mek, m, { from, reply, q }) => {
   try {
-    if (!q) return reply("*AP NE KOI APK DOWNLOAD KARNI HAI 🤔*\n*TO AP ESE LIKHO ☺️*\n\n*APK ❮APK NAME❯*\n\n*JAB AP ESE LIKHO GE 🤗 TO APKI APK DOWNLOAD KAR KE 😃 YAHA PER BHEJNDE JAYE GE 😍🌹*");
+    if (!q) return reply("*Want to download an APK? 🤔*\n*Use the command like this:*\n\n*.apk <app name>*\n\n*Your APK will be downloaded and sent here 😍🌹*");
 
     const apiUrl = `http://ws75.aptoide.com/api/7/apps/search/query=${encodeURIComponent(q)}/limit=1`;
     const { data } = await axios.get(apiUrl);
 
-    if (!data || !data.datalist || !data.datalist.list.length) {
-      return reply("*APK NAHI MIL RAHI 😔*");
+    if (!data ||!data.datalist ||!data.datalist.list.length) {
+      return reply("*APK not found 😔*");
     }
 
     const app = data.datalist.list[0];
@@ -25,12 +25,12 @@ cmd({
 
     let caption = `*╭━━━〔 👑 APK INFO 👑 〕━━━┈⊷*
 *┃ 👑 NAME: ${app.name.toUpperCase()}*
-*┃ 👑 SIZE :❯ ${appSize} MB*
-*┃ 👑 PACK :❯ ${app.package.toUpperCase()}*
-*┃ 👑 VER :❯ ${app.file.vername}*
+*┃ 👑 SIZE: ${appSize} MB*
+*┃ 👑 PACKAGE: ${app.package.toUpperCase()}*
+*┃ 👑 VERSION: ${app.file.vername}*
 *╰━━━━━━━━━━━━━━━┈⊷*
 
-*👑 BY :❯ ECHO-MD 👑*`;
+*👑 BY: ECHO-MD 👑*`;
 
     await conn.sendMessage(from, { image: { url: app.icon }, caption }, { quoted: mek });
 
@@ -42,7 +42,6 @@ cmd({
 
     await m.react("😍");
   } catch (err) {
-    reply("*👑 ERROR :❯* TRY AGAIN!");
+    reply("*👑 ERROR:* Please try again!");
   }
 });
-               
