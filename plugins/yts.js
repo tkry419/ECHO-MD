@@ -1,10 +1,10 @@
-const { cmd } = require('../echo')
-const yts = require('yt-search')
+const { cmd } = require('../echo');
+const yts = require('yt-search');
 
 cmd({
     pattern: "yts",
     alias: ["ytsearch"],
-    react: "☺️",
+    react: "🔎",
     desc: "Search videos on YouTube",
     category: "search",
     use: ".yts <video name>",
@@ -14,42 +14,43 @@ async (conn, mek, m, { from, q, reply }) => {
     try {
         if (!q) {
             return reply(
-                "*🔍 AP NE YOUTUBE KI VIDEOS SEARCH KARNI HAI 🥺*\n\n" +
-                "*Use:*\n.yts Video name\n\n" +
-                "*Example:*\n.yts Tajdar e Haram"
-            )
+                "*🔍 Please provide a video name to search.*\n\n" +
+                "*Usage:*\n.yts <video name>\n\n" +
+                "*Example:*\n.yts Shape of You"
+            );
         }
 
-        const search = await yts(q)
-        const videos = search.videos.slice(0, 10) // top 10 results
+        const search = await yts(q);
+        const videos = search.videos.slice(0, 10);
 
         if (videos.length === 0) {
-            return reply("*❌ KOI VIDEO NAHI MILI 🥺*")
+            return reply("*❌ No videos found.*");
         }
 
-        let text = "*📺 YOUTUBE SEARCH RESULTS 📺*\n\n"
+        let text = "*📺 YOUTUBE SEARCH RESULTS 📺*\n\n";
 
         for (let i = 0; i < videos.length; i++) {
-            const v = videos[i]
+            const v = videos[i];
+
             text +=
 `*${i + 1}. ${v.title}*
-⏱️ ${v.timestamp}
-👁️ ${v.views} views
-🔗 ${v.url}
+⏱️ Duration: ${v.timestamp}
+👁️ Views: ${Number(v.views).toLocaleString()}
+🔗 Link: ${v.url}
 
-`
+`;
         }
 
-        text += "*👑 ECHO-MD-MINI WHATSAPP BOT 👑*"
+        text += "*👑 ECHO-MD-MINI WHATSAPP BOT 👑*";
 
         await conn.sendMessage(
             from,
             { text },
             { quoted: mek }
-        )
+        );
 
     } catch (e) {
-        console.log("YTS ERROR:", e)
-        reply("*❌ YOUTUBE SEARCH ME ERROR AYA 🥺*")
+        console.error("YTS ERROR:", e);
+        reply("*❌ An error occurred while searching YouTube.*");
     }
-})
+});
