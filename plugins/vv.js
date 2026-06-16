@@ -11,13 +11,13 @@ cmd({
 async (conn, mek, m, { from, isCreator, reply }) => {
     try {
         if (!isCreator)
-            return reply("*YEH COMMAND SIRF BOT OWNER KE LIYE HAI 😎*")
+            return reply("*This command is only for the bot owner 😎*")
 
         if (!m.quoted)
             return reply(
-                "*🥺 KISI VIEW ONCE PHOTO / VIDEO / AUDIO KO REPLY KARO*\n\n" +
-                "*Phir likho:* `.vv`\n\n" +
-                "*Phir dekho kamal 😎*"
+                "*🥺 Reply to a view-once photo / video / audio*\n\n" +
+                "*Then type:* `.vv`\n\n" +
+                "*Now watch the magic 😎*"
             )
 
         // 🔥 VIEW ONCE FIX
@@ -40,28 +40,28 @@ async (conn, mek, m, { from, isCreator, reply }) => {
                 image: buffer,
                 caption: quoted.text || ""
             }
-        } 
+        }
         else if (type === "videoMessage") {
             content = {
                 video: buffer,
                 caption: quoted.text || ""
             }
-        } 
+        }
         else if (type === "audioMessage") {
             content = {
                 audio: buffer,
                 mimetype: "audio/mp4",
                 ptt: false
             }
-        } 
+        }
         else {
-            return reply("*❌ YE VIEW ONCE MEDIA SUPPORT NAHI KARTA 🥺*")
+            return reply("*❌ This view-once media type is not supported 🥺*")
         }
 
         await conn.sendMessage(from, content, { quoted: mek })
 
     } catch (e) {
         console.log("VV ERROR:", e)
-        reply("*❌ VIEW ONCE OPEN KARNE ME ERROR AYA 🥺*")
+        reply("*❌ Error while opening view-once media 🥺*")
     }
 })
