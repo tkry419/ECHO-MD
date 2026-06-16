@@ -9,7 +9,7 @@ cmd({
   filename: __filename
 }, async (conn, mek, m, { from, q, reply }) => {
   try {
-    if (!q) return reply("*AP NE KOI FACEBOOK VIDEO DOWNLOAD KARNI HAI 🤔 TO AP US FACEBOOK VIDEO KA LINK COPY KAR LO 🤗*\n*PHIR ESE LIKHO ☺️*\n\n*FB ❮FACEBOOK VIDEO LINK❯*\n\n*JAB AP ESE LIKHO GE 😇 TO APKI FACEBOOK VIDEO DOWNLOAD KAR KE 😃 YAHA PER BHEJ DE JAYE GE 😍♥️*");
+    if (!q) return reply("*Want to download a Facebook video? 🤔*\n*Copy the video link and use the command like this:*\n\n*.fb <facebook video link>*\n\n*Your Facebook video will be downloaded and sent here 😍♥️*");
 
     const apiUrl = `https://movanest.xyz/v2/fbdown?url=${encodeURIComponent(q)}`;
     const res = await axios.get(apiUrl);
@@ -17,30 +17,30 @@ cmd({
 
     // 🔎 API status check
     if (data.status !== true) {
-      return reply("API ERROR 😢");
+      return reply("*API ERROR 😢*");
     }
 
     // 🔎 Results check
     if (!Array.isArray(data.results) || data.results.length === 0) {
-      return reply("*FACEBOOK VIDEO NAHI MIL RAHI 🥺*");
+      return reply("*Facebook video not found 🥺*");
     }
 
     const result = data.results[0];
 
-    // 🎥 Quality selection (API ke mutabiq)
+    // 🎥 Quality selection
     const videoUrl = result.hdQualityLink
       ? result.hdQualityLink
       : result.normalQualityLink;
 
     if (!videoUrl) {
-      return reply("*SIRF FACEBOOK VIDEO KA LINK DO ☺️*");
+      return reply("*Please provide a valid Facebook video link ☺️*");
     }
 
-    // 📝 Caption API data se
+    // 📝 Caption from API data
     const caption = `*👑 FB VIDEO 👑*
-*👑 TIME :❯ ${result.duration}*
-*👑 CREATER :❯ ${data.creator}*
-*👑 BY :❯ ECHO-MD 👑*`;
+*👑 DURATION: ${result.duration}*
+*👑 CREATOR: ${data.creator}*
+*👑 BY: ECHO-MD 👑*`;
 
     await conn.sendMessage(
       from,
@@ -54,6 +54,6 @@ cmd({
 
   } catch (err) {
     console.log(err);
-    reply("❌ Error aa gaya");
+    reply("*❌ An error occurred, please try again*");
   }
 });
