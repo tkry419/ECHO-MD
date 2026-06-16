@@ -20,8 +20,6 @@ cmd({
         }
 
         // Make API request to get pairing code
-        const phoneNumber = "2348123456789";
-
         const response = await axios.get(
         `https://echo-md-oq66.onrender.com/pair?number=${encodeURIComponent(phoneNumber)}`
          );
@@ -76,8 +74,6 @@ cmd({
         }
 
         // Get pairing code from API
-        const phoneNumber = "2348123456789";
-
         const response = await axios.get(
         `https://echo-md-oq66.onrender.com/pair?number=${encodeURIComponent(phoneNumber)}`
         );
