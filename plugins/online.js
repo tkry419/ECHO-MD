@@ -11,15 +11,15 @@ cmd({
 async (conn, mek, m, { from, quoted, isGroup, isAdmins, isCreator, fromMe, reply }) => {
     try {
         // Check if the command is used in a group
-        if (!isGroup) return reply("YEH COMMAND SIRF GROUPS ME USE KARE 😊*");
+        if (!isGroup) return reply("*This command can only be used in groups 😊*");
 
         // Check if user is either creator or admin
-        if (!isCreator && !isAdmins && !fromMe) {
-            return reply("*YEH COMMAND SIRF MERE LIE HAI 😎 OR GROUP ADMINS BHI YE COMMAND USE KAR SAKTE HAI 😍❣️*");
+        if (!isCreator &&!isAdmins &&!fromMe) {
+            return reply("*This command is only for the owner 😎 and group admins 😍❣️*");
         }
 
         // Inform user that we're checking
-        await reply("*ONLINE MEMBERS KI LIST TAYAR HO RAHI HAI 😊*\n*THORA SA INTAZAR KAREIN...😊*");
+        await reply("*Preparing online members list 😊*\n*Please wait a moment...😊*");
 
         const onlineMembers = new Set();
         const groupData = await conn.groupMetadata(from);
@@ -29,7 +29,7 @@ async (conn, mek, m, { from, quoted, isGroup, isAdmins, isCreator, fromMe, reply
         for (const participant of groupData.participants) {
             presencePromises.push(
                 conn.presenceSubscribe(participant.id)
-                    .then(() => {
+                   .then(() => {
                         // Additional check for better detection
                         return conn.sendPresenceUpdate('composing', participant.id);
                     })
@@ -58,23 +58,23 @@ async (conn, mek, m, { from, quoted, isGroup, isAdmins, isCreator, fromMe, reply
 
         const checkOnline = async () => {
             checksDone++;
-            
+
             if (checksDone >= checks) {
                 clearInterval(interval);
                 conn.ev.off('presence.update', presenceHandler);
-                
+
                 if (onlineMembers.size === 0) {
                     return reply("⚠️ Couldn't detect any online members. They might be hiding their presence.");
                 }
-                
+
                 const onlineArray = Array.from(onlineMembers);
-                const onlineList = onlineArray.map((member, index) => 
+                const onlineList = onlineArray.map((member, index) =>
                     `${index + 1}. @${member.split('@')[0]}`
                 ).join('\n');
-                
+
                 const message = `*👑 ONLINE MEMBERS LIST 👑* (${onlineArray.length}/${groupData.participants.length}):\n\n${onlineList}`;
-                
-                await conn.sendMessage(from, { 
+
+                await conn.sendMessage(from, {
                     text: message,
                     mentions: onlineArray
                 }, { quoted: mek });
