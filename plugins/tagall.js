@@ -6,28 +6,28 @@ cmd({
     pattern: "tagall",
     react: "👑",
     alias: ["gc_tagall"],
-    desc: "To Tag all Members",
+    desc: "To tag all members",
     category: "group",
     use: '.tagall [message]',
     filename: __filename
 },
 async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, groupAdmins, prefix, command, args, body }) => {
     try {
-        if (!isGroup) return reply("*YEH COMMAND SIRF GROUPS ME USE KARE 😊*");
-        
+        if (!isGroup) return reply("*This command can only be used in groups 😊*");
+
         const botOwner = conn.user.id.split(":")[0]; // Extract bot owner's number
         const senderJid = senderNumber + "@s.whatsapp.net";
 
-        if (!groupAdmins.includes(senderJid) && senderNumber !== botOwner) {
-            return reply("*YEH COMMAND SIRF ADMINS USE KAR SAKTE HAI 😊*");
+        if (!groupAdmins.includes(senderJid) && senderNumber!== botOwner) {
+            return reply("*Only admins can use this command 😊*");
         }
 
         // Ensure group metadata is fetched properly
         let groupInfo = await conn.groupMetadata(from).catch(() => null);
-        if (!groupInfo) return reply("*MEMBERS TAG NAI HO RAHE 🥺*");
+        if (!groupInfo) return reply("*Failed to tag members 🥺*");
 
         let groupName = groupInfo.subject || "Unknown Group";
-        let totalMembers = participants ? participants.length : 0;
+        let totalMembers = participants? participants.length : 0;
         if (totalMembers === 0) return reply("❌ No members found in this group.");
 
         let emojis = ['👑'];
@@ -37,7 +37,7 @@ async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, groupAd
         let message = body.slice(body.indexOf(command) + command.length).trim();
         if (!message) message = "Attention Everyone"; // Default message
 
-        let teks = `*👑 GROUP NAME 👑* \n ${groupName}\n\n*👑 MEMBERS :❯ ${totalMembers}*\n\n *👑 MESSAGE  👑* \n ${message}\n\n*👑 MEMBERS LIST 👑*\n`;
+        let teks = `*👑 GROUP NAME 👑* \n ${groupName}\n\n*👑 MEMBERS: ${totalMembers}*\n\n*👑 MESSAGE 👑* \n ${message}\n\n*👑 MEMBERS LIST 👑*\n`;
 
         for (let mem of participants) {
             if (!mem.id) continue; // Prevent undefined errors
@@ -50,8 +50,6 @@ async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, groupAd
 
     } catch (e) {
         console.error("TagAll Error:", e);
-        reply(`❌ *Error Occurred !!*\n\n${e.message || e}`);
+        reply(`❌ *Error Occurred!!*\n\n${e.message || e}`);
     }
 });
-
-          
