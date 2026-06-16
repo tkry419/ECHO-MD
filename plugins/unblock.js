@@ -12,7 +12,7 @@ cmd({
 
     // 🔒 Owner only
     if (!isOwner) {
-      return reply("*YEH COMMAND SIRF OWNER KE LIYE HAI 😎*");
+      return reply("*This command is only for the owner 😎*");
     }
 
     let jid;
@@ -24,9 +24,9 @@ cmd({
     // 📌 Inbox case
     else if (from.endsWith("@s.whatsapp.net")) {
       jid = from;
-    } 
+    }
     else {
-      return reply("*UNBLOCK KARNE KE LIYE KISI MESSAGE PAR REPLY KARO YA INBOX ME LIKHO ☺️*");
+      return reply("*To unblock, reply to a message or use this command in inbox ☺️*");
     }
 
     await conn.updateBlockStatus(jid, "unblock");
@@ -35,10 +35,10 @@ cmd({
       react: { text: "🥰", key: mek.key }
     });
 
-    reply(`*MENE APKO UNBLOCK KAR DIYA HAI ☺️*`, { mentions: [jid] });
+    reply(`*I have unblocked you ☺️*`, { mentions: [jid] });
 
   } catch (e) {
     console.log("UNBLOCK ERROR:", e);
-    reply("*❌ UNBLOCK NAHI HO PAYA 😔*");
+    reply("*❌ Failed to unblock 😔*");
   }
 });
