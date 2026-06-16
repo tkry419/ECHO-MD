@@ -6,14 +6,14 @@ cmd({
   alias: ["bioauto", "setautobio"],
   react: "😎",
   category: "owner",
-  desc: "Auto bio on/off",
+  desc: "Turn auto bio on/off",
   filename: __filename
 }, async (conn, mek, m, { from, q, reply, isOwner }) => {
   try {
 
     // 🔐 Owner only
     if (!isOwner) {
-      return reply("*YEH COMMAND SIRF OWNER KE LIYE HAI 😎*");
+      return reply("*This command is only for the owner 😎*");
     }
 
     const state = q?.toLowerCase();
@@ -25,7 +25,7 @@ cmd({
 ➤ *.autobio on*
 ➤ *.autobio off*
 
-📌 *ABHI AUTOBIO:* ${global.autoBio ? "ON ✅" : "OFF ❌"}`
+📌 *Current AutoBio:* ${global.autoBio ? "ON ✅" : "OFF ❌"}`
       );
     }
 
@@ -36,14 +36,13 @@ cmd({
       updateBio(conn);
     }
 
-    return reply(`*AUTO BIO AB ${state.toUpperCase()} HO GAYI HAI ☺️*`);
+    return reply(`*AUTO BIO IS NOW ${state.toUpperCase()} ☺️*`);
 
   } catch (e) {
     console.log("AUTOBIO ERROR:", e);
-    reply("*❌ Error aa gaya*");
+    reply("*❌ An error occurred*");
   }
 });
-
 
 // ================= BIO UPDATER =================
 async function updateBio(conn) {
@@ -64,7 +63,6 @@ async function updateBio(conn) {
   // ⏱️ 1 minute loop
   setTimeout(() => updateBio(conn), 60 * 1000);
 }
-
 
 // ================= TIME FORMAT =================
 function clockString(ms) {
