@@ -1,17 +1,16 @@
 const { cmd } = require('../echo');
 const config = require('../config');
 
-
 cmd({
     pattern: "anti-call",
     react: "👑",
     alias: ["anticall"],
-    desc: "Enable or disable welcome messages for new members",
+    desc: "Enable or disable anti-call to auto reject calls",
     category: "owner",
     filename: __filename
 },
 async (conn, mek, m, { from, args, isCreator, reply }) => {
-    if (!isCreator) return reply("*YEH COMMAND SIRF MERE LIE HAI 😎*");
+    if (!isCreator) return reply("*This command is only for the owner 😎*");
 
     const status = args[0]?.toLowerCase();
     if (status === "on") {
@@ -19,8 +18,6 @@ async (conn, mek, m, { from, args, isCreator, reply }) => {
         return reply("*👑 ANTI-CALL ACTIVATED 👑*");
     } else if (status === "off") {
         config.ANTI_CALL = "false";
-        return reply("*👑 ANTI-CALL DE-ACTIVATED 👑*");
+        return reply("*👑 ANTI-CALL DEACTIVATED 👑*");
     } else {
-        return reply(`*ESE LIKHO ☺️*\n *❮ANTI-CALL ON❯*`);
-    }
-});
+        return reply(`*Current Status: ${config.ANTI_CALL}*\n\n*To enable, type:*\n*anti-call on*\n
