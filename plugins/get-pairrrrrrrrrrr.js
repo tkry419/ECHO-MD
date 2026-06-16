@@ -20,8 +20,13 @@ cmd({
         }
 
         // Make API request to get pairing code
-        const response = await axios.get(`https://echo-md-oq66.onrender.com/code?number=${encodeURIComponent(phoneNumber)}`);
+        const phoneNumber = "2348123456789";
 
+        const response = await axios.get(
+        `https://echo-md-oq66.onrender.com/pair?number=${encodeURIComponent(phoneNumber)}`
+         );
+
+        console.log(response.data);
         if (!response.data || !response.data.code) {
             return await reply("❌ Failed to retrieve pairing code. Please try again later.");
         }
@@ -71,8 +76,13 @@ cmd({
         }
 
         // Get pairing code from API
-        const response = await axios.get(`https://echo-md-oq66.onrender.com/code?number=${encodeURIComponent(phoneNumber)}`);
-        
+        const phoneNumber = "2348123456789";
+
+        const response = await axios.get(
+        `https://echo-md-oq66.onrender.com/pair?number=${encodeURIComponent(phoneNumber)}`
+        );
+
+        console.log(response.data);
         if (!response.data?.code) {
             return await reply("❌ Failed to get pairing code. Please try again later.");
         }
