@@ -5,7 +5,7 @@ cmd({
     pattern: "anti-call",
     react: "👑",
     alias: ["anticall"],
-    desc: "Enable or disable anti-call to auto reject calls",
+    desc: "Enable or disable anti-call to auto reject incoming calls",
     category: "owner",
     filename: __filename
 },
@@ -20,4 +20,6 @@ async (conn, mek, m, { from, args, isCreator, reply }) => {
         config.ANTI_CALL = "false";
         return reply("*👑 ANTI-CALL DEACTIVATED 👑*");
     } else {
-        return reply(`*Current Status: ${config.ANTI_CALL}*\n\n*To enable, type:*\n*anti-call on*\n
+        return reply(`*Current Status: ${config.ANTI_CALL}*\n\n*To enable, type:*\n*anti-call on*\n\n*To disable, type:*\n*anti-call off*`);
+    }
+});
