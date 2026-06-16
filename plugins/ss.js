@@ -13,7 +13,7 @@ cmd({
     if (!q) {
       return reply(
         "*🖥️ WEBSITE SCREENSHOT COMMAND*\n\n" +
-        "Use is tarah:\n" +
+        "Usage:\n" +
         "*.screenshot <website URL>*\n\n" +
         "Example:\n" +
         "*.screenshot https://google.com*"
@@ -21,11 +21,11 @@ cmd({
     }
 
     // ✅ API call to movanest.xyz for full HD screenshot (1280x720)
-    const apiUrl = `https:///movanest.xyz/v2/ssweb?url=${encodeURIComponent(q)}&width=1280&height=720&full_page=true`;
+    const apiUrl = `https://movanest.xyz/v2/ssweb?url=${encodeURIComponent(q)}&width=1280&height=720&full_page=true`;
     const res = await axios.get(apiUrl, { timeout: 60000 });
 
     if (!res.data || !res.data.status || !res.data.screenshot) {
-      return reply("❌ Screenshot generate nahi hua / API se response nahi aaya");
+      return reply("❌ Failed to generate screenshot / No response from API");
     }
 
     const screenshotUrl = res.data.screenshot;
@@ -38,6 +38,6 @@ cmd({
 
   } catch (err) {
     console.error("SCREENSHOT COMMAND ERROR:", err.message);
-    reply("❌ Screenshot generate nahi hua / API busy");
+    reply("❌ Failed to generate screenshot / API is busy");
   }
 });
