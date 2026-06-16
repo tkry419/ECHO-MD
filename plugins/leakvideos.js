@@ -28,7 +28,7 @@ cmd({
     } catch (err) {
 
         console.log(err);
-        reply("❌ Video load nahi hui.");
+        reply("❌ Failed to load Video.");
 
     }
 
@@ -61,7 +61,7 @@ cmd({
     } catch (err) {
 
         console.log(err);
-        reply("❌ Video load nahi hui.");
+        reply("❌ Failed to load Video.");
 
     }
 
