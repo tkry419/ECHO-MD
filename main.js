@@ -11,6 +11,7 @@ const {
     getContentType,
 } = require('@whiskeysockets/baileys');
 const { echomd } = require('./lib/system');
+const {france} = require('../framework/france');
 const config = require('./config');
 const events = require('./echo');
 const { sms } = require('./lib/msg');
@@ -51,7 +52,7 @@ const activeSockets = new Map();
 const socketCreationTime = new Map();
 
 
-function createarslanStore() {
+function createechoStore() {
     const store = {
         messages: {},
         bind(ev) {
