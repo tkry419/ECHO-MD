@@ -280,28 +280,76 @@ async function echoPair(number, res = null) {
 
         // Pairing Code
         if (!conn.authState.creds.registered) {
-            echoLog(`🔐 Starting NEW pairing process for ${sanitizedNumber}`, 'info');
-            try {
-                await delay(120000);
-                const code = await conn.requestPairingCode(sanitizedNumber);
-                echoLog(`Pairing Code for ${sanitizedNumber}: ${code}`, 'success');
-                if (res && !res.headersSent) {
-                    res.send({ code, status: 'new_pairing' });
-                }
-            } catch (error) {
-                echoLog(`Failed to request pairing code: ${error.message}`, 'error');
-                if (res && !res.headersSent) {
-                    res.status(500).send({ error: 'Failed to get pairing code', status: 'error', message: error.message });
-                }
-                throw error;
-            }
-        } else {
-            echoLog(`✅ Using existing session for ${sanitizedNumber}`, 'success');
-            if (res && !res.headersSent) {
-                res.json({ status: 'reconnecting', message: 'Reconnecting with existing session' });
-            }
+    echoLog(`🔐 Starting new pairing process for ${sanitizedNumber}`, 'info');
+    
+    // Set a longer connection timeout before requesting code
+    conn.ev.on('connection.update', (update) => {
+        const { connection, lastDisconnect } = update;
+        if (connection === 'close') {
+            echoLog('Connection closed before pairing completed', 'warn');
+        }
+    });
+
+    try {
+        const code = await conn.requestPairingCode(sanitizedNumber);
+        echoLog(`Pairing code for ${sanitizedNumber}: ${code}`, 'success');
+        
+        if (res && !res.headersSent) {
+            res.send({ 
+                code, 
+                status: 'new_pairing',
+                expiresIn: '2 minutes',
+                message: 'Enter this code in WhatsApp within 2 minutes'
+            });
         }
 
+        // Keep connection open for 2 minutes to wait for pairing
+        const pairingTimeout = 2 * 60 * 1000; // 2 min
+        
+        const pairingPromise = new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => {
+                reject(new Error('Pairing timed out after 2 minutes'));
+            }, pairingTimeout);
+
+            conn.ev.on('creds.update', () => {
+                if (conn.authState.creds.registered) {
+                    clearTimeout(timeout);
+                    resolve(true);
+                }
+            });
+
+            conn.ev.on('connection.update', (update) => {
+                if (update.connection === 'open') {
+                    clearTimeout(timeout);
+                    resolve(true);
+                }
+                if (update.connection === 'close') {
+                    clearTimeout(timeout);
+                    reject(new Error('Connection closed during pairing'));
+                }
+            });
+        });
+
+        await pairingPromise;
+        echoLog(`✅ Successfully paired ${sanitizedNumber}`, 'success');
+
+    } catch (error) {
+        echoLog(`Pairing failed/timed out: ${error.message}`, 'error');
+        
+        if (res && !res.headersSent) {
+            res.status(408).send({ 
+                error: 'Pairing timeout', 
+                status: 'timeout',
+                message: 'Code expired. Please request a new pairing code' 
+            });
+        }
+    }
+} else {
+    echoLog(`✅ Using existing session for ${sanitizedNumber}`, 'success');
+    if (res && !res.headersSent) {
+        res.json({ status: 'reconnecting', message: 'Reconnecting with existing session' });
+    }
+        }
         // Save creds on update
         conn.ev.on('creds.update', async () => {
             await saveCreds();
