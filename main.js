@@ -35,7 +35,6 @@ const { handleAntidelete } = require('./lib/antidelete');
 const express = require('express');
 const fs = require('fs-extra');
 const path = require('path');
-const fs = require("fs");
 const { exec } = require("child_process");
 const pino = require('pino');
 const crypto = require('crypto');
