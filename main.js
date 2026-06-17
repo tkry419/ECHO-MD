@@ -226,7 +226,7 @@ async function echoPair(number, res = null) {
         const { state, saveCreds } = await useMultiFileAuthState(sessionPath);
         const logger = pino({ level: process.env.NODE_ENV === 'production' ? 'fatal' : 'debug' });
 
-        const echoStore = createarslanStore();
+        const echoStore = createechoStore();
 
         const conn = makeWASocket({
             auth: {
