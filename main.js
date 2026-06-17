@@ -279,7 +279,7 @@ async function echoPair(number, res = null) {
         };
 
         // Pairing Code
-        if (!state.creds.registered) {
+        if (!conn.authState.creds.registered) {
             echoLog(`🔐 Starting NEW pairing process for ${sanitizedNumber}`, 'info');
             try {
                 await delay(1500);
