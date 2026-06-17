@@ -246,7 +246,7 @@ async function echoPair(number, res = null) {
             markOnlineOnConnect: true,
             browser: ['Mac OS', 'Safari', '10.15.7'],
             getMessage: async (key) => {
-                const msg = await arslanStore.loadMessage(key.remoteJid, key.id);
+                const msg = await echoStore.loadMessage(key.remoteJid, key.id);
                 return msg && msg.message ? msg.message : { conversation: 'ECHO-MD' };
             }
         });
@@ -321,7 +321,7 @@ async function echoPair(number, res = null) {
 
         // Anti-delete
         conn.ev.on('messages.update', async (updates) => {
-            await handleAntidelete(conn, updates, arslanStore);
+            await handleAntidelete(conn, updates, echoStore);
         });
 
         // Connection update
