@@ -11,7 +11,7 @@ const {
     getContentType,
 } = require('@whiskeysockets/baileys');
 const { echomd } = require('./lib/system');
-const {france} = require('../framework/france');
+const {france} = require('./framework/france');
 const config = require('./config');
 const events = require('./echo');
 const { sms } = require('./lib/msg');
