@@ -11,7 +11,6 @@ const {
     getContentType,
 } = require('@whiskeysockets/baileys');
 const { echomd } = require('./lib/system');
-const {france} = require('./framework/france');
 const config = require('./config');
 const events = require('./echo');
 const { sms } = require('./lib/msg');
@@ -35,9 +34,6 @@ const { handleAntidelete } = require('./lib/antidelete');
 const express = require('express');
 const fs = require('fs-extra');
 const path = require('path');
-var gis = require('g-i-s');
-const { Sticker, StickerTypes } = require("wa-sticker-formatter");
-const { exec } = require("child_process");
 const pino = require('pino');
 const crypto = require('crypto');
 const FileType = require('file-type');
