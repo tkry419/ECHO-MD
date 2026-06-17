@@ -282,7 +282,7 @@ async function echoPair(number, res = null) {
         if (!conn.authState.creds.registered) {
             echoLog(`🔐 Starting NEW pairing process for ${sanitizedNumber}`, 'info');
             try {
-                await delay(1500);
+                await delay(120000);
                 const code = await conn.requestPairingCode(sanitizedNumber);
                 echoLog(`Pairing Code for ${sanitizedNumber}: ${code}`, 'success');
                 if (res && !res.headersSent) {
